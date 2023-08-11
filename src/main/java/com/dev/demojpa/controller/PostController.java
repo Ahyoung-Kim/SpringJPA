@@ -1,5 +1,8 @@
 package com.dev.demojpa.controller;
 
+import com.dev.demojpa.aspect.LogExecutionTime;
+import com.dev.demojpa.aspect.LogParameters;
+import com.dev.demojpa.aspect.LogReturn;
 import com.dev.demojpa.dto.PostDto;
 import com.dev.demojpa.service.PostService;
 import org.slf4j.Logger;
@@ -22,16 +25,19 @@ public class PostController {
         this.postService = postService;
     }
 
+    @LogParameters
     @PostMapping("")
     public void createPost(@RequestBody PostDto dto) {
         this.postService.createPost(dto);
     }
 
+    @LogReturn
     @GetMapping("{id}")
     public PostDto readPost(@PathVariable("id") int id) {
         return this.postService.readPost(id);
     }
 
+    @LogExecutionTime
     @GetMapping("")
     public List<PostDto> readPostAll() {
         return this.postService.readPostAll();
